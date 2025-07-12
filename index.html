@@ -12,14 +12,72 @@
   <div class="contact-dropdown">
     <a href="mailto:manasshri012@gmail.com">Email</a>
     <a href="https://github.com/Shri-Man12" target="_blank">GitHub</a>
-    <!-- Add more links here -->
+    <a href="https://www.linkedin.com/in/manas-shrivastava-591628318" target="_blank">LinkedIn</a>
+  </div>
+</div>
+<!-- Interests Button -->
+<button class="interests-toggle">Interests</button>
+
+<!-- Hidden Interests Section -->
+<div class="interests-section hidden">
+  <button class="home-button">← Home</button>
+  <div class="interests-header">My Interests</div>
+  <div class="interests-content">
+    <div class="interest-card">Academics</div>
+    <div class="interest-card">Miscellaneous</div>
   </div>
 </div>
 
   <div class="container">
     <img src="profile.jpg" alt="Profile Photo" class="profile-pic" />
-    <h1>Manas Shrivastava</h1>
-    <p>Student passionate about physics, chemistry, and research.</p>
-  </div>
+    <h1>Manas Shrivastava</h1>.
+    <p>BS- MS Student at IISER KOLKATA <br>
+      Passionate about physics, chemistry, and research.</p> 
+   </div>
+
+<script>
+  const interestsBtn = document.querySelector('.interests-toggle');
+  const interestsSection = document.querySelector('.interests-section');
+  const container = document.querySelector('.container');
+  const contactBtn = document.querySelector('.contact-wrapper');
+  const homeBtn = document.querySelector('.home-button');
+
+  function showInterests() {
+    history.pushState({ page: 'interests' }, '', '#interests');
+    container.classList.add('hidden');
+    contactBtn.classList.add('hidden');
+    interestsBtn.classList.add('hidden');
+    interestsSection.classList.remove('hidden');
+  }
+
+  function showHome() {
+    container.classList.remove('hidden');
+    contactBtn.classList.remove('hidden');
+    interestsBtn.classList.remove('hidden');
+    interestsSection.classList.add('hidden');
+  }
+
+  interestsBtn.addEventListener('click', showInterests);
+  homeBtn.addEventListener('click', () => {
+    history.pushState({ page: 'home' }, '', '#home');
+    showHome();
+  });
+
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.page === 'interests') {
+      showInterests();
+    } else {
+      showHome();
+    }
+  });
+
+  // Optional: handle direct load from #interests in URL
+  if (location.hash === '#interests') {
+    showInterests();
+  }
+</script>
+
+
+
 </body>
 </html>
