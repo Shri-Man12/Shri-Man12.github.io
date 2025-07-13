@@ -5,77 +5,175 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manas | Profile</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Stint+Ultra+Condensed&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Crimson+Text&family=MedievalSharp&display=swap" rel="stylesheet">
+
 </head>
 <body>
-<div class="contact-wrapper">
-  <div class="contact-toggle">Contact Me</div>
-  <div class="contact-dropdown">
-    <a href="mailto:manasshri012@gmail.com">Email</a>
-    <a href="https://github.com/Shri-Man12" target="_blank">GitHub</a>
-    <a href="https://www.linkedin.com/in/manas-shrivastava-591628318" target="_blank">LinkedIn</a>
+
+<div class="containers">
+
+  
+  <div class="panel left-panel"></div>
+  
+  <div class="left-menu">
+    <div class="projects-group">
+     <button class="menu-btn" id="projects-btn">Projects</button>
+      <ul class="project-list">
+        <li><a href=" https://chatgpt.com/">Void Engine Simulation</a></li>
+        <li><a href=" https://chatgpt.com/">Arcane Web Compiler   </a> </li>
+        <li><a href=" https://chatgpt.com/">Rune-based Shader Toy </a>  </li>
+        <li><a href=" https://chatgpt.com/">Dishonored Lore Blog  </a> </li>
+        <li><a href=" https://chatgpt.com/">Experimental UI Design</a> </li>
+      </ul>
+    </div>
+    <button class="menu-btn">CV</button>
+    <button class="menu-btn">Contact Me</button>
+
+    
   </div>
-</div>
-<!-- Interests Button -->
-<button class="interests-toggle">Interests</button>
+  
+  <!-- <img src="profile.jpg" alt="Profile Picture" class="profile-pic" /> -->
 
-<!-- Hidden Interests Section -->
-<div class="interests-section hidden">
-  <button class="home-button">← Home</button>
-  <div class="interests-header">My Interests</div>
-  <div class="interests-content">
-    <div class="interest-card">Academics</div>
-    <div class="interest-card">Miscellaneous</div>
+  <div class="panel right-panel">
+    <div class="big-hi">   Hi, </div> <div class="intro-text">I am Manas Shrivastava.</div>
   </div>
+
+  
+   <div class="a-box enter-btn">
+    <img src="rune-dark.png" alt="Enter Rune" />
+  </div>
+
+  
+  <div class="content-reveal">
+    <div class="a-box return-btn">
+      <img src="rune-dark.png" alt="Return Rune" />
+    </div>
+    <div class="full-message">Welcome to the world. </div>
+  </div>
+
+
+
+  </div>
+
+
 </div>
-
-  <div class="container">
-    <img src="profile.jpg" alt="Profile Photo" class="profile-pic" />
-    <h1>Manas Shrivastava</h1>.
-    <p>BS- MS Student at IISER KOLKATA <br>
-      Passionate about physics, chemistry, and research.</p> 
-   </div>
-
 <script>
-  const interestsBtn = document.querySelector('.interests-toggle');
-  const interestsSection = document.querySelector('.interests-section');
-  const container = document.querySelector('.container');
-  const contactBtn = document.querySelector('.contact-wrapper');
-  const homeBtn = document.querySelector('.home-button');
+const enterBtn = document.querySelector('.enter-btn');
+const returnBtn = document.querySelector('.return-btn');
+const left = document.querySelector('.left-panel');
+const right = document.querySelector('.right-panel');
+const content = document.querySelector('.content-reveal');
+const projectsBtn = document.getElementById('projects-btn');
+const projectList = document.querySelector('.project-list');
+let projectsVisible = false;
 
-  function showInterests() {
-    history.pushState({ page: 'interests' }, '', '#interests');
-    container.classList.add('hidden');
-    contactBtn.classList.add('hidden');
-    interestsBtn.classList.add('hidden');
-    interestsSection.classList.remove('hidden');
+//  Define close function
+function closePanels() {
+  left.style.transform = 'translate(0, 0)';
+  right.style.transform = 'translate(0, 0)';
+  content.style.opacity = 0;
+
+  // Hide project list if open
+  projectList.classList.remove('active');
+  projectsVisible = false;
+
+  // Show enter button after animation ends
+  setTimeout(() => {
+    enterBtn.style.display = 'flex';
+  }, 1000);
+}
+
+// Define open function
+function openPanels() {
+  left.style.transform = 'translate(-100%, -100%)';
+  right.style.transform = 'translate(100%, 100%)';
+  content.style.opacity = 1;
+  enterBtn.style.display = 'none';
+
+  // Hide project list if open
+  projectList.classList.remove('active');
+  projectsVisible = false;
+}
+
+//  On enter (rune click)
+enterBtn.addEventListener('click', () => {
+  openPanels();
+  history.pushState({ opened: true }, '', '#open');
+});
+
+// On return (white rune click)
+returnBtn.addEventListener('click', () => {
+  history.back(); // Triggers popstate event
+});
+
+//  Back button handling
+window.addEventListener('popstate', (event) => {
+  if (!event.state || !event.state.opened) {
+    closePanels();
   }
+});
 
-  function showHome() {
-    container.classList.remove('hidden');
-    contactBtn.classList.remove('hidden');
-    interestsBtn.classList.remove('hidden');
-    interestsSection.classList.add('hidden');
+//  Projects button toggle
+projectsBtn.addEventListener('click', () => {
+  projectsVisible = !projectsVisible;
+  projectList.classList.toggle('active', projectsVisible);
+
+
+const leftMenu = document.querySelector('.left-menu');
+
+enterBtn.addEventListener('click', () => {
+  openPanels();
+  history.pushState({ opened: true }, '', '#open');
+
+  // instantly hide the left menu
+  leftMenu.style.display = 'none';
+
+
+});
+
+returnBtn.addEventListener('click', () => {
+  history.back(); // triggers popstate
+});
+
+window.addEventListener('popstate', (event) => {
+  if (!event.state || !event.state.opened) {
+    closePanels();
+
+    // bring back the left menu
+    setTimeout(() => {
+      leftMenu.style.display = 'flex';
+    }, 1000); // matches panel transition
   }
+});
 
-  interestsBtn.addEventListener('click', showInterests);
-  homeBtn.addEventListener('click', () => {
-    history.pushState({ page: 'home' }, '', '#home');
-    showHome();
-  });
+document.addEventListener('click', (event) => {
+  const isList = projectList.contains(event.target);
+  const isButton = projectsBtn.contains(event.target);
 
-  window.addEventListener('popstate', (e) => {
-    if (e.state && e.state.page === 'interests') {
-      showInterests();
-    } else {
-      showHome();
-    }
-  });
-
-  // Optional: handle direct load from #interests in URL
-  if (location.hash === '#interests') {
-    showInterests();
+  if (!isList && !isButton) {
+    projectList.classList.remove('active');
+    projectsVisible = false;
   }
+});
+
+
+
+
+
+
+
+});
+
+
+
+
+
 </script>
+
+
 
 
 
